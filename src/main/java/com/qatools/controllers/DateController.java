@@ -25,6 +25,7 @@ public class DateController {
     public ResponseEntity<?> calculateDifferenceBetweenTwoDates(@RequestBody DateRequestDTO dateRequestDto) {
         Date dateFrom = dateRequestDto.getDateFrom();
         Date dateTo = dateRequestDto.getDateTo();
+        Boolean countLastDay = dateRequestDto.getCountLastDay();
         if (!dateValidator.isDateValid(dateFrom) || !dateValidator.isDateValid(dateTo)) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "Incorrect date.");
@@ -34,6 +35,9 @@ public class DateController {
         LocalDate fromDate = LocalDate.of(Integer.parseInt(dateFrom.getYear()), Integer.parseInt(dateFrom.getMonth()), Integer.parseInt(dateFrom.getDay()));
         LocalDate toDate = LocalDate.of(Integer.parseInt(dateTo.getYear()), Integer.parseInt(dateTo.getMonth()), Integer.parseInt(dateTo.getDay()));
         long daysDifference = ChronoUnit.DAYS.between(fromDate, toDate);
+        if (countLastDay) {
+            daysDifference++;
+        }
         return ResponseEntity.ok(daysDifference);
     }
 }

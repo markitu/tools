@@ -7,4 +7,5 @@ import lombok.Data;
 public class DateRequestDTO {
     private Date dateFrom;
     private Date dateTo;
+    private Boolean countLastDay;
 }
