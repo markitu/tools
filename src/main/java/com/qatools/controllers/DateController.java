@@ -3,6 +3,7 @@ package com.qatools.controllers;
 import com.qatools.dto.DateRequestDTO;
 import com.qatools.services.calculation.date.Date;
 import com.qatools.validators.DateValidator;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,15 @@ import java.util.Map;
 public class DateController {
 
     DateValidator dateValidator = new DateValidator();
+
+    @Getter
+    public static class ResultResponse {
+        private final String result;
+
+        public ResultResponse(long result) {
+            this.result = Long.toString(result);
+        }
+    }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/calculate")
@@ -38,6 +48,7 @@ public class DateController {
         if (countLastDay) {
             daysDifference++;
         }
-        return ResponseEntity.ok(daysDifference);
+        ResultResponse resultResponse = new ResultResponse(daysDifference);
+        return ResponseEntity.ok(resultResponse);
     }
 }
