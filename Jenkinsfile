@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        GITHUB_TOKEN = credentials('3pfW6A6euNVBZRWq2mr7e5eFlq8CDdCdB0b8pCSjD5s')
+        GITHUB_TOKEN = credentials('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')
     }
 
     stages {
         stage('Checkout') {
             steps {
                 script {
-                    git credentialsId: '3pfW6A6euNVBZRWq2mr7e5eFlq8CDdCdB0b8pCSjD5s',
+                    git credentialsId: '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',
                         url: 'https://github.com/markitu/tools.git',
                         branch: 'main'
                 }
