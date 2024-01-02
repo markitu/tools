@@ -15,7 +15,6 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 script {
-                    sh 'mvn clean install'
                     sh 'docker-compose -f ${WORKSPACE}/docker-compose.yml up -d'
                 }
             }
