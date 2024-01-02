@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     sh 'mvn clean install'
-                    sh 'docker-compose -f ${WORKSPACE}/docker-compose.yml
+                    sh 'docker-compose -f ${WORKSPACE}/docker-compose.yml up -d'
                 }
             }
         }
