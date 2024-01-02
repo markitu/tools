@@ -1,16 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        GIT_CREDENTIALS_ID = credentials('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')
-    }
-
     stages {
         stage('Checkout') {
             steps {
                 script {
-                    git credentialsId: "${GIT_CREDENTIALS_ID}",
-                        url: 'https://github.com/markitu/tools.git',
+                    git url: 'https://github.com/markitu/tools.git',
                         branch: 'main'
                 }
             }
