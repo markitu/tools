@@ -11,9 +11,7 @@ pipeline {
                 }
             }
         }
-
         
-
         stage('Build and Deploy') {
             steps {
                 script {
