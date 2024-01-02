@@ -17,9 +17,8 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 script {
-                    def docker = docker
-                    docker.build('tools')
-                    docker.image('tools').withRun('-p 7777:7777 --rm -d')
+                    sh 'mvn clean install'
+                    sh 'docker-compose -f ${WORKSPACE}/docker-compose.yml
                 }
             }
         }
