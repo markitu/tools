@@ -4,18 +4,26 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Шаг для проверки кода из репозитория
+                checkout scm
+            }
+        }
+
+        stage('Build and Push Docker Image') {
+            steps {
+                // Шаг для сборки Docker-образа и его загрузки в Docker Hub
                 script {
-                    git url: 'https://github.com/markitu/tools.git',
-                        branch: 'main'
+                    def dockerImage = docker.build('markitu33/tools:1.0.0')
+                    dockerImage.push()
                 }
             }
         }
 
-        stage('Build and Deploy') {
+        stage('Deploy Docker Container') {
             steps {
+                // Шаг для запуска Docker-контейнера
                 script {
-                    docker.build('tools')
-                    docker.image('tools').withRun('-p 7777:7777 --rm -d')
+                    dockerImage('markitu33/tools:1.0.0').run('-p 7777:7777 -d --name my-container')
                 }
             }
         }
@@ -23,14 +31,10 @@ pipeline {
 
     post {
         success {
-            script {
-                echo 'Успешно собрано и развернуто'
-            }
+            echo 'Deployment successful!'
         }
         failure {
-            script {
-                echo 'Сборка или разворачивание завершились с ошибкой'
-            }
+            echo 'Deployment failed.'
         }
     }
 }
